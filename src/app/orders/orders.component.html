@@ -1,0 +1,76 @@
+<section id="page-header" class="about-header">
+  <h2>My Orders</h2>
+  <p>LEAVE A MESSAGE. We love to hear from you</p>
+</section>
+
+<section id="cart" class="section-p1">
+  @if (orders.length > 0) {
+  <table width="100%">
+          <thead>
+              <tr>
+                <td>products</td>
+                <td>Delivered</td>
+                <td>Paid</td>
+                <td>Payment Metdod</td>
+                <!-- <td>Tax Price</td> -->
+                <td>Products Price</td>
+                <td>Total Price</td>
+              </tr>
+          </thead>
+
+          <tbody>
+            @for (order of orders; track order._id) {
+              <tr>
+                  <td>@for (item of order.items; track item._id) {
+                    <img [src]="item?.product?.cover"
+                         [alt]="item?.product?.name">{{ item.product.name }} | {{ item.quantity }}
+                    <br>
+                    <br>
+                  }</td>
+                  <td>@if (order.deliveredAt) {
+                    {{ order.deliveredAt|date }}
+                  } @else {
+                    No
+                  }</td>
+                  <td> @if (order.paidAt) {
+                    {{ order.paidAt|date }}
+                  } @else {
+                    No
+                  }</td>
+                  <td>{{ order?.payment }}</td>
+                  <td>{{ order.itemsPrice|currency:'EUR' }}</td>
+                  <td>{{ order.totalPrice|currency:'EUR' }}</td>
+              </tr>
+            }
+          </tbody>
+  </table>
+} @else {
+  <h2 class="text-center text-capitalize my-5">you don't have any orders</h2>
+}
+</section>
+
+
+<!-- pagination -->
+<div class="container m-auto mt-5 w-25">
+  <ul class="pagination">
+    <li class="page-item">
+      <button (click)="changePage(1)" class="page-link">First</button>
+    </li>
+    @if (pagination.prev) {
+      <li class="page-item">
+        <button (click)="changePage(pagination.prev)" class="page-link">{{ pagination.prev }}</button>
+      </li>
+    }
+    <li class="page-item">
+      <button disabled class="page-link">{{ pagination.currentPage }}</button>
+    </li>
+    @if (pagination.next) {
+      <li class="page-item">
+        <button (click)="changePage(pagination.next)" class="page-link">{{ pagination.next }}</button>
+      </li>
+    }
+    <li class="page-item">
+      <button (click)="changePage(pagination.totalPages!)" class="page-link">Last</button>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,27 @@
+<section id="product1" class="section-p1">
+        <h2>Featured Product</h2>
+        <p>Best Seller Collection</p>
+        @if (products.length > 0) {
+        <div class="pro-container">
+          @for (product of products; track product._id) {
+            <div class="pro">
+                <img [src]="product.cover" [alt]="product.name">
+
+                <div class="des">
+                    <span>{{ product.name }}</span>
+                    <h5>{{ product.description?.slice(0, 50) || 'No description available' }}...</h5>
+                    <div class="star">
+                      {{ product.rateAvg | number: '1.1-1' }} ★ - Count: {{ product.rating }}
+                    </div>
+                    <h4>{{ product.price | currency: 'EUR' }}</h4>
+                </div>
+                <!-- <a [routerLink]="['/products', product._id]">see more</a> -->
+                <button [routerLink]="['/products', product._id]" class="normal">See More</button>
+            </div>
+          }
+        </div>}@else {
+          <h2 class="text-center text-danger my-5 p-2">try again later...</h2>
+          }
+    </section>
+
+

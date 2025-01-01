@@ -1,0 +1,56 @@
+<div class="login_form mx-auto m-5">
+  <!-- Login form container -->
+  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+    <h3>Log in with</h3>
+    <div class="login_option">
+      <!-- Google button -->
+      <div class="option">
+        <a href="http://localhost:3000/auth/google">
+          <i class="fa-brands fa-google"></i>
+          <span>Google</span>
+        </a>
+      </div>
+      <!-- Apple button -->
+      <div class="option">
+        <a href="#">
+          <i class="fa-brands fa-apple"></i>
+          <span>Apple</span>
+        </a>
+      </div>
+    </div>
+    <!-- Login option separator -->
+    <p class="separator">
+      <span>or</span>
+    </p>
+    <!-- Email input box -->
+    <div class="input_box">
+      <label for="email">Email</label>
+      @if (loginForm.get('username')?.errors !== null && loginForm.get('username')?.touched) {
+        @if (loginForm.get('username')?.errors?.['required']) {
+          <p class="text-danger">username required</p>
+        }
+
+      }
+      <input formControlName="username" type="text" id="email" placeholder="Enter email or username" required />
+    </div>
+    <!-- Paswwrod input box -->
+    <div class="input_box">
+      <div class="password_title">
+        <label for="password">Password</label>
+        <a routerLink="/account/forget-password">Forgot Password?</a>
+      </div>
+      @if (loginForm.get('password')?.errors !== null && loginForm.get('password')?.touched) {
+        @if (loginForm.get('password')?.errors?.['required']) {
+          <p class="text-danger">password required</p>
+        }
+        @if (loginForm.get('password')?.errors?.['minlength'] || loginForm.get('password')?.errors?.['maxlength']) {
+          <p class="text-danger">password length 6 : 20</p>
+        }
+      }
+      <input formControlName="password" type="password" id="password" placeholder="Enter your password" required />
+    </div>
+     <!-- Login button -->
+    <button [disabled]="loginForm.invalid" (submit)="login(loginForm)" type="submit" class="form-control">Log In</button>
+    <p class="sign_up">Don't have an account? <a href="#">Sign up</a></p>
+  </form>
+</div>

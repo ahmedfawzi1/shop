@@ -1,0 +1,60 @@
+<app-header></app-header>
+<div class="container d-flex mt-5 justify-content-around">
+  <div>
+    <input (keyup)="searchProducts(search.value)" #search class="form-control mx-2" type="search" placeholder="Search"
+      aria-label="Search">
+  </div>
+</div>
+
+<section id="product1" class="section-p1">
+  <h2>All Products</h2>
+  <p>Save more with coupons & up to 70% off!</p>
+  @if (products.length > 0) {
+  <div class="pro-container">
+    @for (product of products; track product._id) {
+    <div class="pro">
+      <img [src]="product.cover" [alt]="product.name">
+
+      <div class="des">
+        <span>{{ product.name }}</span>
+        <h5>{{ product.description|description:7 }}...</h5>
+        <div class="star">
+          {{ product.rateAvg | number: '1.1-1' }} ★ - Count: {{ product.rating }}
+        </div>
+        <h4>{{ product.price | currency: 'EUR' }}</h4>
+      </div>
+      <!-- <a [routerLink]="['/products', product._id]">see more</a> -->
+      <button [routerLink]="['/products', product._id]" class="normal">See More</button>
+    </div>
+    }
+  </div>}@else {
+  <h2 class="text-center text-danger my-5 p-2">try again later...</h2>
+  }
+</section>
+
+
+
+
+<div class="container m-auto mt-5 w-25">
+  <ul class="pagination">
+    <li class="page-item">
+      <button (click)="changePage(1)" class="page-link">First</button>
+    </li>
+    @if (pagination.prev) {
+    <li class="page-item">
+      <button (click)="changePage(pagination.prev)" class="page-link">{{ pagination.prev }}</button>
+    </li>
+    }
+    <li class="page-item">
+      <button disabled class="page-link">{{ pagination.currentPage }}</button>
+    </li>
+    @if (pagination.next) {
+    <li class="page-item">
+      <button (click)="changePage(pagination.next)" class="page-link">{{ pagination.next }}</button>
+    </li>
+    }
+    <li class="page-item">
+      <button (click)="changePage(pagination.totalPages!)" class="page-link">Last</button>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,40 @@
+<section id="page-header" class="about-header">
+  <h2>My Wishlist</h2>
+  <p>LEAVE A MESSAGE. We love to hear from you</p>
+</section>
+
+<section id="cart" class="section-p1">
+  <table width="100%">
+          <thead>
+              <tr>
+                  <td>Product</td>
+                  <td>Subcategory</td>
+                  <td>Price</td>
+                  <td></td>
+                  <td></td>
+              </tr>
+          </thead>
+
+          <tbody>
+            @for (product of wishlist; track product._id) {
+              <tr>
+                  <td>
+                    <img [src]="product.cover" [alt]="product.name" class="mCS_img_loaded">
+                    <div class="name-product">{{ product.name }}</div>
+                  </td>
+                  <td>{{ product.subcategory.name }}</td>
+                  <td>Cartoon Astronaut T-shirt</td>
+                  <td>{{ product.price|currency:'EUR' }}</td>
+                  <td> <button (click)="removeFromWishlist(product._id)" class="trash-icon nav-link"><i
+                    class="far fa-trash-alt"></i></button></td>
+
+              </tr> }@empty {
+                <tr>
+                  <td colspan="5">
+                    <h2 class="text-center my-5">your wishlist is empty</h2>
+                  </td>
+                </tr>
+              }
+          </tbody>
+  </table>
+</section>
